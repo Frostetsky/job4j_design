@@ -17,6 +17,10 @@ public class MatrixIt implements Iterator<Integer> {
         if (row + 1 == data.length) {
             return column < data[row].length;
         }
+        while (column == data[row].length) {
+            column = 0;
+            row++;
+        }
         return row < data.length;
     }
 
@@ -25,11 +29,6 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        while (column == data[row].length) {
-            column = 0;
-            row++;
-        }
         return data[row][column++];
-
     }
 }
