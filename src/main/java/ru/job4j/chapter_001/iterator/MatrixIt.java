@@ -17,11 +17,11 @@ public class MatrixIt implements Iterator<Integer> {
         if (row + 1 == data.length) {
             return column < data[row].length;
         }
-        while (column == data[row].length) {
+        while (data.length > row && column == data[row].length) {
             column = 0;
             row++;
         }
-        return row < data.length;
+        return data.length > row && data[row].length > column;
     }
 
     @Override
