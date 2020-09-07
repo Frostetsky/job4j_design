@@ -13,7 +13,9 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
-        this.array[index++] = model;
+        if (model != null) {
+            this.array[index++] = model;
+        }
     }
 
     public void setIndex(int position, T model) {
@@ -44,6 +46,9 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
+                if (array[0] == null) {
+                    return false;
+                }
                 return iteratorindex < array.length;
             }
 

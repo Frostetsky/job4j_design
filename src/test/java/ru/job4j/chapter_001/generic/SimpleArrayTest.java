@@ -80,4 +80,11 @@ public class SimpleArrayTest {
         assertThat(iterator.hasNext(), is(false));
         iterator.next();
     }
+
+    @Test
+    public void whenArrayIsEmpty() {
+        SimpleArray<Integer> numbers = new SimpleArray<>(10);
+        Iterator<Integer> iterator = numbers.iterator();
+        assertThat(iterator.hasNext(), is(false));
+    }
 }
