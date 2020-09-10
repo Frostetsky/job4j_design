@@ -3,6 +3,7 @@ package ru.job4j.chapter_001.generic;
 import org.junit.Test;
 
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -83,8 +84,32 @@ public class SimpleArrayTest {
 
     @Test
     public void whenArrayIsEmpty() {
-        SimpleArray<Integer> numbers = new SimpleArray<>(10);
+        SimpleArray<Integer> numbers = new SimpleArray<>();
         Iterator<Integer> iterator = numbers.iterator();
         assertThat(iterator.hasNext(), is(false));
+    }
+
+    @Test
+    public void DynamicsTest() {
+        SimpleArray<Integer> numbers = new SimpleArray<>(2);
+        numbers.add(1);
+        numbers.add(2);
+        numbers.add(3);
+        numbers.add(5);
+        numbers.add(6);
+        numbers.add(7);
+        assertThat(numbers.get(5), is(7));
+    }
+
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenFailFastIterator() {
+        SimpleArray<Integer> numbers = new SimpleArray<>();
+        numbers.add(1);
+        numbers.add(2);
+        Iterator<Integer> iterator = numbers.iterator();
+        while (iterator.hasNext()) {
+            Integer number = iterator.next();
+            numbers.remove(1);
+        }
     }
 }
