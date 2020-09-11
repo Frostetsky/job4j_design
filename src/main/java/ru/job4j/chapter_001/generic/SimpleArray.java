@@ -18,30 +18,28 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
-        if (model != null) {
-            if (index == array.length) {
-                Object[] newarray = new Object[array.length + 15];
-                System.arraycopy(array, 0, newarray, 0, array.length);
-                array = newarray;
-            }
-            this.array[index++] = model;
-            iteratorCount++;
+        if (index == array.length) {
+            Object[] newarray = new Object[array.length + 15];
+            System.arraycopy(array, 0, newarray, 0, array.length);
+            array = newarray;
         }
+        this.array[index++] = model;
+        iteratorCount++;
     }
 
     public void setIndex(int position, T model) {
-        Objects.checkIndex(position, array.length);
+        Objects.checkIndex(position, index);
         this.array[position] = model;
     }
 
     @SuppressWarnings("unchecked")
     public T get(int position) {
-        Objects.checkIndex(position, array.length);
+        Objects.checkIndex(position, index);
         return (T) this.array[position];
     }
 
     public void remove(int position) {
-        Objects.checkIndex(position, array.length);
+        Objects.checkIndex(position, index);
         array[position] = null;
         System.arraycopy(array, position + 1, array, position , array.length - 1 - position );
         array[array.length - 1] = null;

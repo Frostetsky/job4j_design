@@ -61,7 +61,6 @@ public class SimpleArrayTest {
         numbers.add(4);
         numbers.add(5);
         numbers.remove(2);
-        assertNull(numbers.get(4));
         assertThat(numbers.get(2), is(4));
     }
 
