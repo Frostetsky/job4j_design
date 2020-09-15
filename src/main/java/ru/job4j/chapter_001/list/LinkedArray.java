@@ -3,6 +3,7 @@ package ru.job4j.chapter_001.list;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 
 public class LinkedArray<T> implements Iterable<T> {
@@ -28,6 +29,7 @@ public class LinkedArray<T> implements Iterable<T> {
     }
 
     public T get(int index) {
+        Objects.checkIndex(index,size);
         set(index);
         return ref.value;
     }
@@ -57,7 +59,6 @@ public class LinkedArray<T> implements Iterable<T> {
             @Override
             public T next() {
                 if (!hasNext()) { throw new NoSuchElementException(); }
-                failFast();
                 T item = (T) current.value;
                 current = current.next;
                 return item;
