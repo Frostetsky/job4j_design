@@ -3,22 +3,25 @@ package ru.job4j.chapter_001.set;
 import ru.job4j.chapter_001.generic.SimpleArray;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class SimpleSet<T> {
 
     private SimpleArray<T> array = new SimpleArray<>();
 
     public void add(T value) {
-        for (T values : array) {
-            if (values.equals(value)) {
-                return;
-            }
+        if (contains(value)) {
+            array.add(value);
         }
-        array.add(value);
     }
 
-    public T get(int index) {
-        return array.get(index);
+    private boolean contains(T value) {
+        for (T values : array) {
+            if (Objects.equals(values,value)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Iterator iterator() {
