@@ -10,7 +10,7 @@ public class SimpleSet<T> {
     private SimpleArray<T> array = new SimpleArray<>();
 
     public void add(T value) {
-        if (contains(value)) {
+        if (!contains(value)) {
             array.add(value);
         }
     }
@@ -18,10 +18,10 @@ public class SimpleSet<T> {
     private boolean contains(T value) {
         for (T values : array) {
             if (Objects.equals(values,value)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public Iterator iterator() {
