@@ -22,14 +22,9 @@ public class LogFilter {
         return result;
     }
 
-    public static void main(String[] args) {
-        List<String> log = filter("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
-                                       "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
-                                       "bufferedreader\\log.txt");
+    public static void save(List<String> log, String file) {
         try (BufferedWriter out = new BufferedWriter(
-                new FileWriter("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
-                                        "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
-                                        "bufferedreader\\404.txt")))
+                new FileWriter(file)))
         {
             for (String logs : log) {
                 out.write(logs);
@@ -38,5 +33,15 @@ public class LogFilter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        List<String> log = filter("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
+                                       "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
+                                       "bufferedreader\\log.txt");
+
+        save(log, "C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
+                       "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
+                       "bufferedreader\\404.txt");
     }
 }
