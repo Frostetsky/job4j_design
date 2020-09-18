@@ -1,7 +1,6 @@
 package ru.job4j.chapter_002.java_IO.bufferedreader;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +26,17 @@ public class LogFilter {
         List<String> log = filter("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
                                        "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
                                        "bufferedreader\\log.txt");
-        System.out.println(log);
+        try (BufferedWriter out = new BufferedWriter(
+                new FileWriter("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
+                                        "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
+                                        "bufferedreader\\404.txt")))
+        {
+            for (String logs : log) {
+                out.write(logs);
+                out.write(System.lineSeparator());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
