@@ -1,5 +1,7 @@
 package ru.job4j.chapter_002.java_IO.config;
 
+import ru.job4j.chapter_002.java_IO.serveranalysis.IncorrectInitialDataException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -14,13 +16,16 @@ public class Config {
         this.path = path;
     }
 
-    public void load() {
+    public void load() throws IncorrectInitialDataException {
         String[] strings = toString().split(System.lineSeparator());
         for (String element : strings) {
             if (element.contains("#") || element.isEmpty()) {
                 continue;
             }
             String[] mapselement = element.split("=");
+            if (mapselement.length > 2) {
+                throw new IncorrectInitialDataException("Неверные исходные данные");
+            }
             values.put(mapselement[0],mapselement[1]);
         }
     }
@@ -41,7 +46,7 @@ public class Config {
         return out.toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IncorrectInitialDataException {
         new Config("./src/main/java/ru/job4j/chapter_002/java_IO/config/app.properties").load();
     }
 }
