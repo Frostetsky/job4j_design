@@ -3,6 +3,7 @@ package ru.job4j.chapter_002.java_IO.fileinputstream;
 import java.io.FileInputStream;
 
 public class EvenNumberFile {
+
     public static void main(String[] args) {
         try (FileInputStream in =
                      new FileInputStream("./src/main/java/ru/job4j/chapter_002/java_IO/fileinputstream/even.txt"))
