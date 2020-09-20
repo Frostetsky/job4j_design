@@ -36,12 +36,7 @@ public class LogFilter {
     }
 
     public static void main(String[] args) {
-        List<String> log = filter("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
-                                       "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
-                                       "bufferedreader\\log.txt");
-
-        save(log, "C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
-                       "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
-                       "bufferedreader\\404.txt");
+        List<String> log = filter("./src/main/java/ru/job4j/chapter_002/java_IO/bufferedreader/log.txt");
+        save(log, "./src/main/java/ru/job4j/chapter_002/java_IO/bufferedreader/404.txt");
     }
 }
