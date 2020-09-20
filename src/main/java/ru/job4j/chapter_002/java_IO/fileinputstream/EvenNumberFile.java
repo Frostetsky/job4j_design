@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 public class EvenNumberFile {
     public static void main(String[] args) {
         try (FileInputStream in =
-                     new FileInputStream("C:\\Users\\Nikita\\IdeaProjects\\job4j_design\\" +
-                                                "src\\main\\java\\ru\\job4j\\chapter_002\\java_IO\\" +
-                                                "fileinputstream\\even.txt"))
+                     new FileInputStream("./src/main/java/ru/job4j/chapter_002/java_IO/fileinputstream/even.txt"))
         {
             StringBuilder builder = new StringBuilder();
             int read;
