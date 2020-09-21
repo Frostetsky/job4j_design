@@ -7,6 +7,7 @@ import java.util.Map;
 public class ArgsName {
 
     private final Map<String, String> values = new HashMap<>();
+    private static final int dash = 45;
 
     public String get(String key) {
         return values.get(key);
@@ -18,7 +19,7 @@ public class ArgsName {
         }
         for (String arg : args) {
             String clearline = arg.substring(1);
-            if (arg.charAt(0) != 45) {
+            if (arg.charAt(0) != dash ) {
                 throw new IllegalArgumentException();
             }
             String[] element = clearline.split("=");
