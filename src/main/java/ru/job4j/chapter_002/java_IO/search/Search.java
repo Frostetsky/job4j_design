@@ -9,8 +9,15 @@ import java.util.List;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        File file = new File("./src");
-        search(file, new String[] {"txt", "log", "properties"}).forEach(System.out::println);
+        if (args.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        File file = new File(args[0]);
+        String[] enlargement = new String[args.length - 1];
+        for (int i = 1; i < args.length; i++) {
+            enlargement[i - 1] = args[i];
+        }
+        search(file, enlargement).forEach(System.out::println);
     }
 
     public static List<File> search(File root, String[] ext) {
