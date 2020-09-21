@@ -8,8 +8,11 @@ import java.util.List;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get("./src");
-        search(start, "txt").forEach(System.out::println);
+        if (args.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        Path start = Paths.get(args[0]);
+        search(start, args[1]).forEach(System.out::println);
     }
 
 
