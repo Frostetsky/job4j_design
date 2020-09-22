@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Analizy {
 
-    private static Map<String, Integer> log = new LinkedHashMap<>();
     private static List<String> result = new ArrayList<>();
 
     public void unavailable(String source, String target) throws IOException {
@@ -13,19 +12,18 @@ public class Analizy {
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
             read.lines().forEach(out::add);
             String[] elementlogs = out.toString().split(System.lineSeparator());
+            List<Integer> times = new ArrayList<>();
+            for (String element : elementlogs) {
+                times.add(Integer.valueOf(element.split(" ")[0]));
+            }
+            int index = 0;
             for (String element : elementlogs) {
                 String[] elementmaps = element.split(" ");
                 if (elementmaps.length > 2) {
                     throw new IncorrectInitialDataException("Неверные исходные данные");
                 }
-                log.put(elementmaps[1], Integer.valueOf(elementmaps[0]));
-            }
-            read.close();
-            List<Integer> times = new ArrayList<>(log.values());
-            int index = 0;
-            for (Map.Entry<String, Integer> pair : log.entrySet()) {
-                Integer number = pair.getValue();
-                String time = pair.getKey();
+                Integer number = Integer.valueOf(elementmaps[0]);
+                String time = elementmaps[1];
                 if (index != 0) {
                     if ((number == 500 || number == 400) && (times.get(index - 1) == 200 || times.get(index - 1) == 300)) {
                         result.add(time);
