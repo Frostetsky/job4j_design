@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
+        if (args.length == 0 || args[1].isEmpty()) {
             throw new IllegalArgumentException();
         }
         Path start = Paths.get(args[0]);
