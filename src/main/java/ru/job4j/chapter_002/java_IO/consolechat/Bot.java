@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 
 public class Bot {
 
+    private static final Bot bot = new Bot();
     private static BufferedWriter writer;
     private static final String logname = "./src/main/java/ru/job4j/chapter_002/java_IO/consolechat/log.txt";
     private static final String genword = "./src/main/java/ru/job4j/chapter_002/java_IO/consolechat/generationword.txt";
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static boolean instart = true;
     private static boolean outstart = true;
+    private static boolean flag = true;
 
     static {
         try {
@@ -33,17 +35,22 @@ public class Bot {
 
     private void question() throws Exception {
         String question = reader.readLine();
-        if (question.equals("stop")) {
-            writeInTXT(question);
-            instart = false;
-        }
-        else if (question.equals("exit")) {
-            writeInTXT(question);
-            instart = false;
-            outstart = false;
-        } else {
-            writeInTXT(question);
-            answer();
+        switch (question) {
+            case "stop": {
+                writeInTXT(question);
+                instart = false;
+                break;
+            }
+            case "exit": {
+                writeInTXT(question);
+                instart = false;
+                outstart = false;
+                break;
+            }
+            default: {
+                writeInTXT(question);
+                answer();
+            }
         }
     }
 
@@ -54,6 +61,20 @@ public class Bot {
         System.out.println(answer);
     }
 
+    private void firstIterationAndContinue() throws Exception {
+        String contin = reader.readLine();
+        if (contin.equals("continue")) {
+            instart = true;
+            writeInTXT(contin);
+        } else if (flag) {
+            writeInTXT(contin);
+            bot.answer();
+            flag = false;
+        } else {
+            writeInTXT(contin);
+        }
+    }
+
     private static void writeInTXT(String massage) throws IOException {
         writer.write(massage);
         writer.write(System.lineSeparator());
@@ -61,19 +82,8 @@ public class Bot {
 
     public static void main(String[] args) throws Exception {
         Bot bot = new Bot();
-        boolean flag = true;
         do {
-            String contin = reader.readLine();
-            if (contin.equals("continue")) {
-                instart = true;
-                writeInTXT(contin);
-            } else if (flag) {
-                writeInTXT(contin);
-                bot.answer();
-                flag = false;
-            } else {
-                writeInTXT(contin);
-            }
+            bot.firstIterationAndContinue();
             while (instart) {
                 bot.question();
             }

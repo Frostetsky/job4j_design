@@ -1,10 +1,12 @@
-qq
-I don`t know
-dd
-I don`t know
-stop
-au
-continue
-dd
+q
 Thanks
+d
+Thanks
+stop
+sadasd
+sadsa
+dsasd
+continue
+d
+Hello
 exit
