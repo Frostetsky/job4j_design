@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class LinkedArray<T> implements Iterable<T> {
 
-    private int size = 0;
+    private int size = 1;
     private Node<T> head;
     private Node<T> tail;
     private Node<T> ref;
