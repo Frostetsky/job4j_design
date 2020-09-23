@@ -7,52 +7,44 @@ public class Analizy {
 
     private static List<String> result = new ArrayList<>();
 
-    public void unavailable(String source, String target) throws IOException {
-        StringJoiner out = new StringJoiner(System.lineSeparator());
+    public void unavailable(String source, String target) {
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
-            read.lines().forEach(out::add);
-            String[] elementlogs = out.toString().split(System.lineSeparator());
-            List<Integer> times = new ArrayList<>();
-            for (String element : elementlogs) {
-                times.add(Integer.valueOf(element.split(" ")[0]));
+            String line;
+            List<String> times = new ArrayList<>();
+            while ((line = read.readLine()) != null) {
+                times.add(line);
             }
-            int index = 0;
-            for (String element : elementlogs) {
-                String[] elementmaps = element.split(" ");
-                if (elementmaps.length > 2) {
-                    throw new IncorrectInitialDataException("Неверные исходные данные");
+            for (int index = 0; index < times.size(); index++) {
+                if (index == 0) {
+                    continue;
                 }
-                Integer number = Integer.valueOf(elementmaps[0]);
-                String time = elementmaps[1];
-                if (index != 0) {
-                    if ((number == 500 || number == 400) && (times.get(index - 1) == 200 || times.get(index - 1) == 300)) {
-                        result.add(time);
-                    }
+                Integer index1 = Integer.valueOf(times.get(index).split(" ")[0]);
+                Integer index2 = Integer.valueOf(times.get(index - 1).split(" ")[0]);
+                if ((index1 == 500 || index1 == 400) && (index2 == 200 || index2 == 300)) {
+                    result.add(times.get(index).split(" ")[1]);
                 }
-                if (index != 0) {
-                    if ((times.get(index - 1) == 500 || times.get(index - 1) == 400) && (number == 200 || number == 300)) {
-                        result.add(time);
-                    }
+                if ((index2 == 500 || index2 == 400) && (index1 == 200 || index1 == 300)) {
+                    result.add(times.get(index).split(" ")[1]);
                 }
-                index++;
             }
-        } catch (IncorrectInitialDataException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        BufferedWriter writer = new BufferedWriter(new FileWriter(target));
-        int index = 0;
-        for (String time : result) {
-            if (index == 0) {
-                writer.write(time + " ");
-                index++;
-            } else if (index == 1) {
-                writer.write(time);
-                writer.write(System.lineSeparator());
-                index = 0;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(target))) {
+            int index = 0;
+            for (String time : result) {
+                if (index == 0) {
+                    writer.write(time + " ");
+                    index++;
+                } else if (index == 1) {
+                    writer.write(time);
+                    writer.write(System.lineSeparator());
+                    index = 0;
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        writer.close();
     }
 
 
