@@ -1,11 +1,10 @@
 q
-Thanks
+Hello
 d
-Thanks
+I don`t know
 stop
-sadasd
-sadsa
-dsasd
+sd
+sd
 continue
 d
 Hello

@@ -3,61 +3,63 @@ package ru.job4j.chapter_002.java_IO.consolechat;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bot {
 
-    private static final Bot bot = new Bot();
-    private static BufferedWriter writer;
     private static final String logname = "./src/main/java/ru/job4j/chapter_002/java_IO/consolechat/log.txt";
     private static final String genword = "./src/main/java/ru/job4j/chapter_002/java_IO/consolechat/generationword.txt";
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static boolean instart = true;
     private static boolean outstart = true;
     private static boolean flag = true;
+    private static List<String> words = new ArrayList<>();
+    private static int amount = 0;
+    private static List<String> log = new ArrayList<>();
 
-    static {
-        try {
-            writer = new BufferedWriter(
-                        new FileWriter(logname));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private int lineNumber() throws Exception {
-        int line = 0;
-        LineNumberReader reader = new LineNumberReader(new FileReader(genword));
-        while (reader.readLine() != null) {
-            line++;
-        }
-        return line;
+    private void startBot() throws Exception {
+        initializeList(genword);
+        do {
+            firstIterationAndContinue();
+            while (instart) {
+                question();
+            }
+        } while (outstart);
+        reader.close();
+        writeInTXT(log);
     }
 
     private void question() throws Exception {
         String question = reader.readLine();
         switch (question) {
             case "stop": {
-                writeInTXT(question);
+                log.add(question);
                 instart = false;
                 break;
             }
             case "exit": {
-                writeInTXT(question);
+                log.add(question);
                 instart = false;
                 outstart = false;
                 break;
             }
             default: {
-                writeInTXT(question);
+                log.add(question);
                 answer();
             }
         }
     }
 
-    private void answer() throws Exception {
-        int N = (int) ( Math.random() * lineNumber() );
-        String answer = Files.lines(Paths.get(genword)).skip(N).findFirst().get();
-        writeInTXT(answer);
+    private void initializeList(String pathtowordfile) throws IOException {
+           Files.lines(Paths.get(pathtowordfile))
+                .forEach(word -> { words.add(word); amount++;});
+    }
+
+    private void answer() {
+        int N = (int) ( Math.random() * amount );
+        String answer = words.get(N);
+        log.add(answer);
         System.out.println(answer);
     }
 
@@ -65,30 +67,29 @@ public class Bot {
         String contin = reader.readLine();
         if (contin.equals("continue")) {
             instart = true;
-            writeInTXT(contin);
+            log.add(contin);
         } else if (flag) {
-            writeInTXT(contin);
-            bot.answer();
+            log.add(contin);
+                answer();
             flag = false;
         } else {
-            writeInTXT(contin);
+            log.add(contin);
         }
     }
 
-    private static void writeInTXT(String massage) throws IOException {
-        writer.write(massage);
-        writer.write(System.lineSeparator());
+    private static void writeInTXT(List<String> loglist) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(logname))) {
+            for (String log : loglist) {
+                writer.write(log);
+                writer.write(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws Exception {
         Bot bot = new Bot();
-        do {
-            bot.firstIterationAndContinue();
-            while (instart) {
-                bot.question();
-            }
-        } while (outstart);
-        reader.close();
-        writer.close();
+        bot.startBot();
     }
 }
