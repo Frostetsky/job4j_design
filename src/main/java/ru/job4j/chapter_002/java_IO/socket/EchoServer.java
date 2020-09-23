@@ -1,4 +1,4 @@
-package ru.job4j.chapter_002.socket;
+package ru.job4j.chapter_002.java_IO.socket;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -13,9 +13,18 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
+                    String msg;
                     while (!(str = in.readLine()).isEmpty()) {
-                        if (str.contains("?msg=Bye")) {
-                            server.close();
+                        if (str.contains("GET /?msg=")) {
+                            msg = (str.split(" ")[1]).split("=")[1];
+                            if (msg.equals("Exit")) {
+                                System.out.println(msg);
+                                server.close();
+                            } else if (msg.equals("Hello")) {
+                                System.out.println("Hello");
+                            } else {
+                                System.out.println(msg);
+                            }
                         }
                     }
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
@@ -24,3 +33,5 @@ public class EchoServer {
         }
     }
 }
+
+// curl -i http://localhost:9000/?msg=Exit
