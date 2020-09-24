@@ -38,7 +38,9 @@ public class EchoServer {
                         break;
                     }
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    out.write(msg.getBytes());
+                    if (msg != null) {
+                        out.write(msg.getBytes());
+                    }
                 }
             }
         } catch (IOException e) {
