@@ -19,13 +19,14 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
-                    String msg;
+                    String msg = null;
                     while (!(str = in.readLine()).isEmpty()) {
                         if (str.contains("GET /?msg=")) {
                             msg = (str.split(" ")[1]).split("=")[1];
                             if (msg.equals("Exit")) {
                                 System.out.println(msg);
                                 server.close();
+                                break;
                             } else if (msg.equals("Hello")) {
                                 System.out.println("Hello");
                             } else {
@@ -33,7 +34,11 @@ public class EchoServer {
                             }
                         }
                     }
+                    if (server.isClosed()) {
+                        break;
+                    }
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                    out.write(msg.getBytes());
                 }
             }
         } catch (IOException e) {
