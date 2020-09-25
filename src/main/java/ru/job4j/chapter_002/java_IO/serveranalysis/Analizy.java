@@ -47,7 +47,6 @@ public class Analizy {
         }
     }
 
-
     public static void main (String[]args) throws IOException {
         String source = "./src/main/java/ru/job4j/chapter_002/java_IO/serveranalysis/server.log";
         String target = "./src/main/java/ru/job4j/chapter_002/java_IO/serveranalysis/result.log";
