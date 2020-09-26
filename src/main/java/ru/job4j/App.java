@@ -1,7 +1,5 @@
 package ru.job4j;
 
-import java.util.Arrays;
-
 /**
  * Hello world!
  *
