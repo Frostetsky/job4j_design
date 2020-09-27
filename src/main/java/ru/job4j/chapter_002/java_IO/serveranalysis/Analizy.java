@@ -10,22 +10,25 @@ public class Analizy {
     public void unavailable(String source, String target) {
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
             String line;
+            String lastline = null;
             int index = -1;
-            List<String> times = new ArrayList<>();
             while ((line = read.readLine()) != null) {
-                times.add(line);
                 index++;
+                if (index == 0) {
+                    lastline = line;
+                }
                 if (index == 0) {
                     continue;
                 }
                 Integer index1 = Integer.valueOf(line.split(" ")[0]);
-                Integer lastindex = Integer.valueOf(times.get(index - 1).split(" ")[0]);
+                Integer lastindex = Integer.valueOf(lastline.split(" ")[0]);
                 if ((index1 == 500 || index1 == 400) && (lastindex == 200 || lastindex == 300)) {
-                    result.add(times.get(index).split(" ")[1]);
+                    result.add(line.split(" ")[1]);
                 }
                 if ((lastindex == 500 || lastindex == 400) && (index1 == 200 || index1 == 300)) {
-                    result.add(times.get(index).split(" ")[1]);
+                    result.add(line.split(" ")[1]);
                 }
+                lastline = line;
             }
         } catch (IOException e) {
             e.printStackTrace();
