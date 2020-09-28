@@ -6,29 +6,21 @@ import java.util.*;
 public class Analizy {
 
     private static final List<String> result = new ArrayList<>();
+    private static boolean foundError = false;
 
     public void unavailable(String source, String target) {
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
             String line;
-            String lastline = null;
-            int index = -1;
             while ((line = read.readLine()) != null) {
-                index++;
-                if (index == 0) {
-                    lastline = line;
-                }
-                if (index == 0) {
-                    continue;
-                }
                 Integer index1 = Integer.valueOf(line.split(" ")[0]);
-                Integer lastindex = Integer.valueOf(lastline.split(" ")[0]);
-                if ((index1 == 500 || index1 == 400) && (lastindex == 200 || lastindex == 300)) {
+                if ((index1 == 500 || index1 == 400) && !foundError) {
                     result.add(line.split(" ")[1]);
+                    foundError = true;
                 }
-                if ((lastindex == 500 || lastindex == 400) && (index1 == 200 || index1 == 300)) {
+                if (foundError && (index1 == 200 || index1 == 300)) {
                     result.add(line.split(" ")[1]);
+                    foundError = false;
                 }
-                lastline = line;
             }
         } catch (IOException e) {
             e.printStackTrace();
