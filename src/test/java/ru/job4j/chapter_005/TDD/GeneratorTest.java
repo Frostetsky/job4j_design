@@ -12,7 +12,7 @@ public class GeneratorTest {
         String template = "Hello, My name is ${name}. My age is ${age}.";
         String expected = "Hello, My name is Nikita. My age is 21.";
         Map<String, String> keys = Map.of("name", "Nikita", "age", "21");
-        TemplateGenerator tg = new TemplateGenerator();
+        Generator tg = new TemplateGenerator();
         String result = tg.produce(template, keys);
         assertThat(expected, is(result));
     }
@@ -22,7 +22,7 @@ public class GeneratorTest {
         String template = "Hello, I am ${name}. I have son. His job is ${job}.";
         String expected = "Hello, I am Nikita. I have son. His name is Aleksandr.";
         Map<String, String> keys = Map.of("name", "Nikita", "age", "21");
-        TemplateGenerator tg = new TemplateGenerator();
+        Generator tg = new TemplateGenerator();
         String result = tg.produce(template, keys);
     }
 
@@ -34,7 +34,7 @@ public class GeneratorTest {
                 "name", "Nikita",
                 "age", "21",
                 "email", "job4j@bk.ru");
-        TemplateGenerator tg = new TemplateGenerator();
+        Generator tg = new TemplateGenerator();
         String result = tg.produce(template, keys);
     }
 }
