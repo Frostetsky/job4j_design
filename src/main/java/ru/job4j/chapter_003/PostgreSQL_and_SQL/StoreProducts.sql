@@ -1,16 +1,16 @@
 create database score;
 
 create table product(
-                        id serial primary key,
-                        name varchar(255),
-                        type_id int references type(id),
-                        expired_date date,
-                        price int
+    id serial primary key,
+    name varchar(255),
+    type_id int references type(id),
+    expired_date date,
+    price int
 );
 
 create table type(
-                     id serial primary key,
-                     name varchar(255)
+    id serial primary key,
+    name varchar(255)
 );
 
 insert into type(name) values ('Хлеб');
@@ -38,7 +38,7 @@ select * from type;
 select * from product;
 
 -- 1. Написать запрос получение всех продуктов с типом "СЫР"
-select * from product where type_id = 2;
+select * from type where name = 'Сыр';
 -- 2. Написать запрос получения всех продуктов, у кого в имени есть слово "мороженное".
 select * from product where name like '%Мороженное%';
 -- 3. Написать запрос, который выводит все продукты, срок годности которых заканчивается в следующем месяце.
