@@ -3,6 +3,7 @@ package ru.job4j.chapter_001.tree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public interface SimpleTree<E> {
 
@@ -11,6 +12,8 @@ public interface SimpleTree<E> {
     Optional<Node<E>> findBy(E value);
 
     boolean isBinary();
+
+    void detour(Predicate<Node<E>> predicate);
 
     class Node<E> {
         final E value;
