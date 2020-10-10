@@ -13,8 +13,8 @@ class Tree<E> implements SimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
-        Optional<Node<E>> node = findBy(parent);
-        if (findBy(child).isEmpty() && node.isPresent()) {
+        Optional<Node<E>> node = detour(findBy(parent));
+        if (detour(findBy(child)).isEmpty() && node.isPresent()) {
             node.get().children.add(new Node(child));
             rsl = true;
         }
@@ -22,30 +22,29 @@ class Tree<E> implements SimpleTree<E> {
     }
 
     @Override
-    public void detour(Predicate<Node<E>> predicate) {
+    public Optional<Node<E>> detour(Predicate<Node<E>> predicate) {
+        Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
             if (predicate.test(el)) {
+                rsl = Optional.of(el);
                 break;
             }
             data.addAll(el.children);
         }
-    }
-
-    @Override
-    public Optional<Node<E>> findBy(E value) {
-        Optional<Node<E>> rsl = Optional.empty();
-        detour(eNode -> eNode.value.equals(value));
         return rsl;
     }
 
     @Override
-    public boolean isBinary() {
-        boolean rsl = true;
-        detour(eNode -> eNode.children.size() > 2);
-        return rsl;
+    public Predicate<Node<E>> findBy(E value) {
+        return eNode -> eNode.value.equals(value);
+    }
+
+    @Override
+    public Predicate<Node<E>> isBinary() {
+        return eNode -> eNode.children.size() > 2;
     }
 
 }
