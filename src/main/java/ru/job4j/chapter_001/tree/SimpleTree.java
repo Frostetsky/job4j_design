@@ -10,9 +10,9 @@ public interface SimpleTree<E> {
 
     boolean add(E parent, E child);
 
-    Predicate<Node<E>> findBy(E value);
+    Optional<Node<E>> findBy(E value);
 
-    Predicate<Node<E>> isBinary();
+    boolean isBinary();
 
     Optional<Node<E>> detour(Predicate<Node<E>> predicate);
 

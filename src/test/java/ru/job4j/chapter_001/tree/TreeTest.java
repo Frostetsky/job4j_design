@@ -19,8 +19,8 @@ public class TreeTest {
         tree.add(4, 5);
         tree.add(5, 6);
         assertThat(
-                tree.detour(tree.findBy(6)),
-                is(Optional.of(value))
+                tree.findBy(4).isPresent(),
+                is(true)
         );
     }
 
@@ -29,8 +29,8 @@ public class TreeTest {
         Tree<Integer> tree = new Tree<>(1);
         tree.add(1, 2);
         assertThat(
-                tree.detour(tree.findBy(7)),
-                is(Optional.empty())
+                tree.findBy(7).isPresent(),
+                is(false)
         );
     }
 
@@ -43,7 +43,7 @@ public class TreeTest {
         tree.add(2, 5);
         tree.add(3, 6);
         tree.add(3, 7);
-        assertThat(tree.detour(tree.isBinary()), is(Optional.empty()));
+        assertThat(tree.isBinary(), is(true));
     }
 
     @Test
@@ -56,6 +56,6 @@ public class TreeTest {
         tree.add(3, 5);
         tree.add(3, 6);
         tree.add(3, 7);
-        assertThat(tree.detour(tree.isBinary()), is(Optional.of(value)));
+        assertThat(tree.isBinary(), is(false));
     }
 }

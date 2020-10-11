@@ -13,8 +13,8 @@ class Tree<E> implements SimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
-        Optional<Node<E>> node = detour(findBy(parent));
-        if (detour(findBy(child)).isEmpty() && node.isPresent()) {
+        Optional<Node<E>> node = findBy(parent);
+        if (findBy(child).isEmpty() && node.isPresent()) {
             node.get().children.add(new Node(child));
             rsl = true;
         }
@@ -38,13 +38,13 @@ class Tree<E> implements SimpleTree<E> {
     }
 
     @Override
-    public Predicate<Node<E>> findBy(E value) {
-        return eNode -> eNode.value.equals(value);
+    public Optional<Node<E>> findBy(E value) {
+        return detour(eNode -> eNode.value.equals(value));
     }
 
     @Override
-    public Predicate<Node<E>> isBinary() {
-        return eNode -> eNode.children.size() > 2;
+    public boolean isBinary() {
+        return detour(eNode -> eNode.children.size() > 2).isEmpty();
     }
 
 }
