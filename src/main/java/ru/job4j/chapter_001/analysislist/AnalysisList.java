@@ -13,17 +13,16 @@ public class AnalysisList {
         if (previous.isEmpty() || current.isEmpty()) {
             throw new IllegalArgumentException();
         }
+        this.deleted = deleted(previous, current);
         this.added = added(previous, current);
         this.changed = changed(previous, current);
-        this.deleted = deleted(previous, current);
         return new Info(this.added, this.changed, this.deleted);
     }
 
     private int added(List<User> previous, List<User> current) {
         int added = 0;
-        Set<User> users = new HashSet<>(previous);
-        users.addAll(current);
-        added = users.size() - previous.size();
+        added = current.size() - previous.size() + this.deleted;
+        System.out.println(deleted);
         return added;
     }
 
@@ -40,9 +39,12 @@ public class AnalysisList {
 
     private int deleted(List<User> previous, List<User> current) {
         int deleted = 0;
-        Set<User> users = new HashSet<>(previous);
-        users.removeAll(current);
-        deleted = users.size();
+        for (User user : previous) {
+            if (current.contains(user)) {
+                deleted++;
+            }
+        }
+        deleted = previous.size() - deleted;
         return deleted;
     }
 }
