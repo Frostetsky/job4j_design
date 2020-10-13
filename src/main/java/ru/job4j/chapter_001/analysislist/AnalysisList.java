@@ -22,7 +22,6 @@ public class AnalysisList {
     private int added(List<User> previous, List<User> current) {
         int added = 0;
         added = current.size() - previous.size() + this.deleted;
-        System.out.println(deleted);
         return added;
     }
 
