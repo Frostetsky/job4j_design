@@ -6,17 +6,18 @@ import java.util.List;
 
 public class Program {
 
-    private static List<Food> stack = new ArrayList<>();
+    private static final ControlQuality cq = new ControlQuality();
+    private static final List<Food> stack = new ArrayList<>();
 
     public static void main(String[] args) {
-        init();
-        Context context = new Context(new Shop()); // strategy
-        context.addStore(stack);
-        List<Food> resultCollection = context.returnCollection();
-        resultCollection.forEach(System.out::println);
+        cq.init();
+        initialize();
+        for (Food food : stack) {
+            distribute(food);
+        }
     }
 
-    private static void init() {
+    private static void initialize() {
         Food pasta = new Pasta(
                 "Спаггетти",
                 LocalDate.of(2020, 10,9),
@@ -65,5 +66,15 @@ public class Program {
         stack.add(dumplings);
         stack.add(bread);
         stack.add(dumplingsRussian);
+    }
+
+    private static void distribute(Food food) {
+        List<Storage> storages = cq.findAll();
+        for (Storage st : storages) {
+            if (st.accept(food)) {
+                st.add(food);
+                break;
+            }
+        }
     }
 }

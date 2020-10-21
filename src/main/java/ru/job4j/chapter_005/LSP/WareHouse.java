@@ -1,36 +1,29 @@
 package ru.job4j.chapter_005.LSP;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
-public class WareHouse implements Strategy {
+public class WareHouse implements Storage {
 
     List<Food> wareHouse = new ArrayList<>();
 
     @Override
-    public void add(List<Food> stack) {
-        Iterator<Food> iterator = stack.iterator();
-        while (iterator.hasNext()) {
-            Food food = iterator.next();
-            LocalDate start = food.getCreateDate();
-            LocalDate end = food.getExpiryDate();
-            LocalDate now = LocalDate.now();
-            long allDays = ChronoUnit.DAYS.between(start, end);
-            long remainDays = ChronoUnit.DAYS.between(now, end);
-            int percent = (int) (remainDays / (allDays / 100.0));
-            if (percent > 0 && percent <= 25) {
-                wareHouse.add(food);
-                iterator.remove();
-            }
+    public void add(Food food) {
+        if (accept(food)) {
+            wareHouse.add(food);
         }
     }
 
     @Override
-    public List<Food> findAll() {
-        return wareHouse;
+    public boolean accept(Food food) {
+        int percent = calculate(food);
+        return percent > 0 && percent <= 25;
+    }
+
+    @Override
+    public List<Food> clear() {
+        List<Food> copy = new ArrayList<>(wareHouse);
+        wareHouse.clear();
+        return copy;
     }
 }
