@@ -1,4 +1,4 @@
-package ru.job4j.chapter_005.LSP;
+package ru.job4j.chapter_005.LSP.Products;
 
 import java.time.LocalDate;
 import java.util.Objects;

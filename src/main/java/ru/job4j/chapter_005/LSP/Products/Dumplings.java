@@ -1,7 +1,6 @@
-package ru.job4j.chapter_005.LSP;
+package ru.job4j.chapter_005.LSP.Products;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 public class Dumplings extends Food {
     public Dumplings(String name, LocalDate expiryDate, LocalDate createDate, double price, float discount) {

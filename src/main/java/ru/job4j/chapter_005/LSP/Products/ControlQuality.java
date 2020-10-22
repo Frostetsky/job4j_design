@@ -1,4 +1,4 @@
-package ru.job4j.chapter_005.LSP;
+package ru.job4j.chapter_005.LSP.Products;
 
 import java.util.ArrayList;
 import java.util.List;
