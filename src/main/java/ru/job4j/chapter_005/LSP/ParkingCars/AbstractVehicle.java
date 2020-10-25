@@ -3,9 +3,9 @@ package ru.job4j.chapter_005.LSP.ParkingCars;
 import java.util.Objects;
 
 public abstract class AbstractVehicle {
-    String vehicle;
-    String name;
-    int size;
+    private String vehicle;
+    private String name;
+    private int size;
 
     public AbstractVehicle(String vehicle, String name, int size) {
         this.vehicle = vehicle;
