@@ -15,6 +15,7 @@ public class Program {
         for (Food food : stack) {
             distribute(food);
         }
+        cq.resort();
     }
 
     private static void initialize() {
@@ -68,7 +69,7 @@ public class Program {
         stack.add(dumplingsRussian);
     }
 
-    private static void distribute(Food food) {
+    public static void distribute(Food food) {
         List<Storage> storages = cq.findAll();
         for (Storage st : storages) {
             if (st.accept(food)) {
