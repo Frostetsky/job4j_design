@@ -7,7 +7,7 @@ public class StartProgram {
 
     public static void main(String[] args) {
         initialize();
-        Generator generator = new HRReport(store);
+        Generator generator = new ProgramReport(store);
         System.out.println(generator.generate(employee -> true));
     }
 
