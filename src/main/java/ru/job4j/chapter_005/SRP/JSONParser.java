@@ -1,22 +1,19 @@
 package ru.job4j.chapter_005.SRP;
 
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import ru.job4j.chapter_005.OCP.Parser;
 
 import java.util.List;
 import java.util.StringJoiner;
 
-public class HTMLParser implements Parser {
+public class JSONParser implements Parser {
     @Override
     public String formatted(List<Employee> list) {
         StringJoiner joiner = new StringJoiner(System.lineSeparator());
         for (Employee employee : list) {
-            joiner.add("<html>");
-            joiner.add(" <head>");
-            joiner.add("  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">");
-            joiner.add("    <title>" + employee.toString() + "</title>");
-            joiner.add(" </head>");
-            joiner.add("</html>");
+            Gson gson = new GsonBuilder().create();
+            joiner.add(gson.toJson(employee));
         }
         return joiner.toString();
     }

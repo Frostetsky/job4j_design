@@ -1,8 +1,10 @@
 package ru.job4j.chapter_005.SRP;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Calendar;
 import java.util.Objects;
 
+@XmlRootElement
 public class Employee {
     private String name;
     private Calendar hired;
@@ -14,6 +16,9 @@ public class Employee {
         this.hired = hired;
         this.fired = fired;
         this.salary = salary;
+    }
+
+    public Employee() {
     }
 
     public Employee(String name, double salary) {
