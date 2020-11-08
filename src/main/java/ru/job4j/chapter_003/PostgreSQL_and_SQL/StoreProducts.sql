@@ -33,23 +33,24 @@ insert into product(name, type_id, expired_date, price) values ('Креветк�
 insert into product(name, type_id, expired_date, price) values ('Нагетсы', 5, '2020-10-27', 129);
 insert into product(name, type_id, expired_date, price) values ('Блины замороженные', 5, '2020-10-27', 241);
 insert into product(name, type_id, expired_date, price) values ('Картофель фри замороженный', 5, '2021-02-15', 352);
+insert into product(name, type_id, expired_date, price) values ('Французский хлеб', 1, '2020-12-15', 24);
 
 select * from type;
 select * from product;
 
 
 -- 1. Написать запрос получение всех продуктов с типом "СЫР"
-select * from type where name = 'Сыр';
+select product.name from product join type t on product.type_id = t.id where t.name = 'Сыр';
 -- 2. Написать запрос получения всех продуктов, у кого в имени есть слово "мороженное".
 select * from product where name like '%Мороженное%';
 -- 3. Написать запрос, который выводит все продукты, срок годности которых заканчивается в следующем месяце.
-select * from product where date(expired_date) between '2020-11-01' and '2020-11-30';
+select name from product where extract(month from expired_date) = extract(month from now()) + 1;
 -- 4. Написать запрос, который выводит самый дорогой продукт.
 select * from product where price = (select max(price) from product);
 -- 5. Написать запрос, который выводит количество всех продуктов определенного типа.
 select count(type_id) from product where type_id = 5; -- 1/2/3/4/5
 -- 6. Написать запрос получение всех продуктов с типом "Сыр" и "Молоко"
-select * from product where (type_id = 2 or type_id = 3);
+select product.name from product join type t on product.type_id = t.id where (t.name = 'Сыр' or t.name = 'Молоко');
 -- 7. Написать запрос, который выводит тип продуктов, которых осталось меньше 10 штук.
 select name from type where (select count(p.id) from product as p where p.type_id = type.id) < 10;
 -- 8. Вывести все продукты и их тип.
