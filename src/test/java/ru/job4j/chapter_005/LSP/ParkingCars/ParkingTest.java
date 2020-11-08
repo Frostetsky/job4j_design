@@ -32,7 +32,7 @@ public class ParkingTest {
 
     @Test
     public void whenTrackIsNotParkingInMiddle() {
-        ParkingPlace parkingPlace = new ParkingPlace(2);
+        ParkingPlace parkingPlace = new ParkingPlace(3);
         AbstractVehicle toyota = new Car("Toyota", "Camry", 1);
         AbstractVehicle uaz = new Track("Uaz", "B26", 2);
         parkingPlace.add(toyota);
