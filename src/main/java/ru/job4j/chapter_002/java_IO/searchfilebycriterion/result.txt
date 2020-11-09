@@ -1,0 +1,6 @@
+C:\Users\Nikita\Test\Test1\qq.txt
+C:\Users\Nikita\Test\Test2\Test5\qq.txt
+C:\Users\Nikita\Test\Test3\qq.txt
+C:\Users\Nikita\Test\Test4\qq.txt
+C:\Users\Nikita\Test\Test6\Test7\MyFILE.txt
+C:\Users\Nikita\Test\Test7\qq.txt
