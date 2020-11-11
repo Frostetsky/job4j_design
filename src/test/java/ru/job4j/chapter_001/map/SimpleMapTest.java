@@ -17,6 +17,14 @@ public class SimpleMapTest {
     }
 
     @Test
+    public void whenAddInMapDuplicateKey() {
+        SimpleMap<Integer,String> map = new SimpleMap<>();
+        map.insert(1, "Nikita");
+        map.insert(1, "Mira");
+        assertThat(map.get(1), is("Mira"));
+    }
+
+    @Test
     public void whenDeleteInMap() {
         SimpleMap<Integer, String> map = new SimpleMap<>();
         map.insert(1, "Nikita");
