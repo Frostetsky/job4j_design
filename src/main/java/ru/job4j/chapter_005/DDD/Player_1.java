@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 public class Player_1 implements Player {
 
     private Mark symbol;
-    private static final Field fieldObject = Field.getField();
+    private final Field fieldObject = Field.getField();
 
     public Player_1(Mark symbol) {
         this.symbol = symbol;
