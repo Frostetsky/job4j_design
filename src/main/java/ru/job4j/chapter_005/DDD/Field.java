@@ -4,6 +4,9 @@ public final class Field {
     private static Field fieldSingle;
     String[][] field = new String[3][3];
 
+    private Field() {
+    }
+
     /**
      * Pattern Singleton for play_field
      * @return Singleton Field
