@@ -5,5 +5,5 @@ import java.util.List;
 public interface Parking {
     boolean add(AbstractVehicle vehicle);
     boolean accept(AbstractVehicle vehicle);
-    List<AbstractVehicle> getParkingPlace();
+    List<AbstractVehicle> getParkingPlace(String vehicle);
 }

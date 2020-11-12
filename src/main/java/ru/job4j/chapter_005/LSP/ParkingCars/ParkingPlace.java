@@ -1,19 +1,18 @@
 package ru.job4j.chapter_005.LSP.ParkingCars;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ParkingPlace implements Parking {
-    private int PLACES;
-    private int[] PLACES_FOR_TRACK_ID;
+    private int COUNT_PLACE_FOR_CAR;
+    private int COUNT_PLACE_FOR_TRACK;
+    private List<AbstractVehicle> cars = new ArrayList<>(this.COUNT_PLACE_FOR_CAR);
+    private List<AbstractVehicle> tracks = new ArrayList<>(this.COUNT_PLACE_FOR_TRACK);
 
-    public ParkingPlace(final int PLACES) {
-        this.PLACES = PLACES;
-    }
-
-    public ParkingPlace(int PLACES, int[] PLACES_FOR_TRACK_ID) {
-        this.PLACES = PLACES;
-        this.PLACES_FOR_TRACK_ID = PLACES_FOR_TRACK_ID;
+    public ParkingPlace(int COUNT_PLACE_FOR_CAR, int COUNT_PLACE_FOR_TRACK) {
+        this.COUNT_PLACE_FOR_CAR = COUNT_PLACE_FOR_CAR;
+        this.COUNT_PLACE_FOR_TRACK = COUNT_PLACE_FOR_TRACK;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class ParkingPlace implements Parking {
     }
 
     @Override
-    public List<AbstractVehicle> getParkingPlace() {
+    public List<AbstractVehicle> getParkingPlace(String vehicle) {
         return null;
     }
 }
