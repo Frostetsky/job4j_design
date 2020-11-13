@@ -1,7 +1,6 @@
 package ru.job4j.chapter_001.map;
 
 import java.util.ConcurrentModificationException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
