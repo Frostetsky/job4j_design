@@ -5,28 +5,63 @@ import java.util.List;
 
 
 public class ParkingPlace implements Parking {
-    private int COUNT_PLACE_FOR_CAR;
-    private int COUNT_PLACE_FOR_TRACK;
-    private List<AbstractVehicle> cars = new ArrayList<>(this.COUNT_PLACE_FOR_CAR);
-    private List<AbstractVehicle> tracks = new ArrayList<>(this.COUNT_PLACE_FOR_TRACK);
+    private int fullsizecar;
+    private int fullsizetrack;
+    private List<AbstractVehicle> cars;
+    private List<AbstractVehicle> tracks;
 
-    public ParkingPlace(int COUNT_PLACE_FOR_CAR, int COUNT_PLACE_FOR_TRACK) {
-        this.COUNT_PLACE_FOR_CAR = COUNT_PLACE_FOR_CAR;
-        this.COUNT_PLACE_FOR_TRACK = COUNT_PLACE_FOR_TRACK;
+    public ParkingPlace(final int size_place_for_car,final int size_place_for_track) {
+        this.fullsizecar = size_place_for_car;
+        this.fullsizetrack = size_place_for_track;
+        cars = new ArrayList<>(size_place_for_car);
+        tracks = new ArrayList<>(size_place_for_track);
     }
 
     @Override
     public boolean add(AbstractVehicle vehicle) {
-        return false;
+        boolean result = false;
+        if (vehicle instanceof Car) {
+            if (accept(vehicle)) {
+                cars.add(vehicle);
+                result = true;
+            }
+        } else if (vehicle instanceof Track) {
+            if (accept(vehicle)) {
+                tracks.add(vehicle);
+                result = true;
+            } else if (trackPlacesIsFull()) {
+                for (int i = 0; i < vehicle.getSize(); i++) {
+                    cars.add(vehicle);
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
     @Override
     public boolean accept(AbstractVehicle vehicle) {
-        return false;
+        if (vehicle instanceof Car) {
+            return fullsizecar != cars.size();
+        } else if (vehicle instanceof Track) {
+            return fullsizetrack != tracks.size();
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private boolean trackPlacesIsFull() {
+        return fullsizetrack == tracks.size() && ( (fullsizecar - cars.size()) >= 2 );
     }
 
     @Override
-    public List<AbstractVehicle> getParkingPlace(String vehicle) {
-        return null;
+    public List<AbstractVehicle> getParkingPlace(String vehicles) {
+        if (vehicles.equalsIgnoreCase("trackplaces")) {
+            return tracks;
+        } else if (vehicles.equalsIgnoreCase("carsplaces")) {
+            return cars;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 }
