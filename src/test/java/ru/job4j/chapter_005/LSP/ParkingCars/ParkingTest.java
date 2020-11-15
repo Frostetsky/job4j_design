@@ -1,6 +1,5 @@
 package ru.job4j.chapter_005.LSP.ParkingCars;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
