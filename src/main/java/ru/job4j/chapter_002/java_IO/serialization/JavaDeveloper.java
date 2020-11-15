@@ -17,6 +17,26 @@ public class JavaDeveloper {
         this.projects = projects;
     }
 
+    public boolean isworking() {
+        return isworking;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Mentor getMentor() {
+        return mentor;
+    }
+
+    public String[] getProjects() {
+        return projects;
+    }
+
     @Override
     public String toString() {
         return "JavaDeveloper{" +
