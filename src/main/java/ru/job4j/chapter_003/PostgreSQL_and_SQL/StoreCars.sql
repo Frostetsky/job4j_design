@@ -51,9 +51,9 @@ insert into car(name, body_id, engine_id, gearbox_id) values ('Автоваз', 
 -- ==================================================================================================
 -- 1. Вывести список всех машин и все привязанные к ним детали.
 select name, body, engine, gearbox from car c
-    left join body b on c.body_id = b.id
-    left join engine e on c.engine_id = e.id
-    left join gearbox g on c.gearbox_id = g.id;
+    inner join body b on c.body_id = b.id
+    inner join engine e on c.engine_id = e.id
+    inner join gearbox g on c.gearbox_id = g.id;
 -- ==================================================================================================
 -- 2. Вывести отдельно детали, которые не используются в машине, кузова, двигатели, коробки передач.
 select body from car c right join body b on b.id = c.body_id where name is null;
