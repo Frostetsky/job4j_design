@@ -7,6 +7,7 @@ import java.util.List;
 public class ParkingPlace implements Parking {
     private int fullsizecar;
     private int fullsizetrack;
+    private static final int availableNumberOfSeatsOnTheRight = 2;
     private List<AbstractVehicle> cars;
     private List<AbstractVehicle> tracks;
 
@@ -20,12 +21,12 @@ public class ParkingPlace implements Parking {
     @Override
     public boolean add(AbstractVehicle vehicle) {
         boolean result = false;
-        if (vehicle instanceof Car) {
+        if (vehicle.getSize() == 1) {
             if (accept(vehicle)) {
                 cars.add(vehicle);
                 result = true;
             }
-        } else if (vehicle instanceof Track) {
+        } else if (vehicle.getSize() == 2) {
             if (accept(vehicle)) {
                 tracks.add(vehicle);
                 result = true;
@@ -41,9 +42,9 @@ public class ParkingPlace implements Parking {
 
     @Override
     public boolean accept(AbstractVehicle vehicle) {
-        if (vehicle instanceof Car) {
+        if (vehicle.getSize() == 1) {
             return fullsizecar != cars.size();
-        } else if (vehicle instanceof Track) {
+        } else if (vehicle.getSize() == 2) {
             return fullsizetrack != tracks.size();
         } else {
             throw new IllegalArgumentException();
@@ -51,7 +52,7 @@ public class ParkingPlace implements Parking {
     }
 
     private boolean trackPlacesIsFull() {
-        return fullsizetrack == tracks.size() && ( (fullsizecar - cars.size()) >= 2 );
+        return fullsizetrack == tracks.size() && ( (fullsizecar - cars.size()) >= availableNumberOfSeatsOnTheRight );
     }
 
     @Override

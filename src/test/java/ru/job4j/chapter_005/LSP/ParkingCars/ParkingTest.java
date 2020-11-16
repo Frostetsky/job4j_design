@@ -9,9 +9,9 @@ public class ParkingTest {
     @Test
     public void whenParkingIsFull() {
         ParkingPlace parkingPlace = new ParkingPlace(2, 1);
-        AbstractVehicle toyota = new Car("Toyota", "Camry", 1);
-        AbstractVehicle kio = new Car("Kio", "Optima", 1);
-        AbstractVehicle uaz = new Track("Uaz", "B26", 2);
+        AbstractVehicle toyota = new Car("Toyota", "Camry");
+        AbstractVehicle kio = new Car("Kio", "Optima");
+        AbstractVehicle uaz = new Track("Uaz", "B26");
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
         parkingPlace.add(kio);
@@ -22,8 +22,8 @@ public class ParkingTest {
     @Test
     public void whenTrackIsParking() {
         ParkingPlace parkingPlace = new ParkingPlace(3, 0);
-        AbstractVehicle toyota = new Car("Toyota", "Camry", 1);
-        AbstractVehicle uaz = new Track("Uaz", "B26", 2);
+        AbstractVehicle toyota = new Car("Toyota", "Camry");
+        AbstractVehicle uaz = new Track("Uaz", "B26");
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
         assertThat(parkingPlace.accept(uaz), is(false));
@@ -33,8 +33,8 @@ public class ParkingTest {
     @Test
     public void whenTrackIsNotParking() {
         ParkingPlace parkingPlace = new ParkingPlace(2, 0);
-        AbstractVehicle toyota = new Car("Toyota", "Camry", 1);
-        AbstractVehicle uaz = new Track("Uaz", "B26", 2);
+        AbstractVehicle toyota = new Car("Toyota", "Camry");
+        AbstractVehicle uaz = new Track("Uaz", "B26");
         parkingPlace.add(toyota);
         boolean result = parkingPlace.add(uaz);
         assertThat(result, is(false));
@@ -44,8 +44,8 @@ public class ParkingTest {
     @Test
     public void whenCarIsNotParking() {
         ParkingPlace parkingPlace = new ParkingPlace(0, 1);
-        AbstractVehicle toyota = new Car("Toyota", "Camry", 1);
-        AbstractVehicle uaz = new Track("Uaz", "B26", 2);
+        AbstractVehicle toyota = new Car("Toyota", "Camry");
+        AbstractVehicle uaz = new Track("Uaz", "B26");
         boolean resultCar = parkingPlace.add(toyota);
         boolean resultTrack = parkingPlace.add(uaz);
         assertThat(resultCar, is(false));
@@ -55,9 +55,9 @@ public class ParkingTest {
     @Test
     public void whenCarParking() {
         ParkingPlace parkingPlace = new ParkingPlace(2, 1);
-        AbstractVehicle toyota = new Car("Toyota", "Camry", 1);
-        AbstractVehicle uaz = new Track("Uaz", "B26", 2);
-        AbstractVehicle vaz = new Track("Vaz", "V26", 2);
+        AbstractVehicle toyota = new Car("Toyota", "Camry");
+        AbstractVehicle uaz = new Track("Uaz", "B26");
+        AbstractVehicle vaz = new Track("Vaz", "V26");
         boolean resultCar = parkingPlace.add(toyota);
         boolean resultUaz = parkingPlace.add(uaz);
         boolean resultVaz = parkingPlace.add(vaz);
