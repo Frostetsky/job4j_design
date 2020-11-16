@@ -39,16 +39,11 @@ insert into person(id, name, company_id) values (11, 'Java Developer Kirill', 5)
 
 
 -- Names of all persons that are NOT in the company with id = 5.
-select person.name
-from person
-full outer join company c on person.company_id = c.id
-where company_id != 5 or company_id is null;
-
 -- Company name for each person.
 select person.name, c.name
 from person
-left join company c on person.company_id = c.id
-where c.name is not null;
+full outer join company c on person.company_id = c.id
+where company_id != 5;
 
 -- Select the name of the company with the maximum number of persons and number of persons in this company.
 select count(c.name), c.name as name
