@@ -1,68 +1,43 @@
 package ru.job4j.chapter_002.java_IO.projectarchive;
 
-import ru.job4j.chapter_002.java_IO.search.Search;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public void packFiles(List<File> sources, File target) throws IOException {
-        List<Path> paths;
-        for (File source : sources) {
-            paths = Search.search(Paths.get(source.getAbsolutePath()), "xml");
-            for (Path path : paths) {
-                if (path.getFileName().equals(source.getName())) {
-                    continue;
-                }
-                packSingleFile(source, target);
-            }
-        }
+    public void zipRead(String source_dir, String zip_file, String ending) throws Exception {
+        FileOutputStream fout = new FileOutputStream(zip_file);
+        ZipOutputStream zout = new ZipOutputStream(fout);
+        File fileSource = new File(source_dir);
+        addDirectory(zout, fileSource, ending);
+        zout.close();
+        System.out.println("Zip файл создан!");
     }
 
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
+    private void addDirectory(ZipOutputStream zout, File fileSource, String ending) throws Exception {
+        File[] files = fileSource.listFiles();
+        System.out.println("Добавление директории <" + fileSource.getName() + ">");
+        assert files != null;
+        for (File file : files) {
+            if (file.isDirectory()) {
+                addDirectory(zout, file, ending);
+                continue;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (file.getName().endsWith(ending)) {
+                continue;
+            }
+            System.out.println("Добавление файла <" + file.getName() + ">");
+            FileInputStream fis = new FileInputStream(file);
+            zout.putNextEntry(new ZipEntry(file.getPath()));
+            byte[] buffer = new byte[4048];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                zout.write(buffer, 0, length);
+            }
+            zout.closeEntry();
+            fis.close();
         }
     }
-
-    public List<File> copyFile(String directory) {
-        List<File> result = new ArrayList<>();
-        File file = new File(directory);
-        if (!file.isDirectory()) {
-            throw new IllegalArgumentException();
-        }
-        try {
-            result = Files.walk(Paths.get(directory))
-                    .filter(Files::isRegularFile)
-                    .map(Path::toFile)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-            return result;
-        }
-
-        public static void main(String[] args) throws IOException {
-            ArgZip argzip = new ArgZip(args);
-            Zip zip = new Zip();
-            List<File> files = zip.copyFile(argzip.directory());
-            new Zip().packFiles(
-                    files,
-                    new File(argzip.output())
-            );
-        }
 }
 
