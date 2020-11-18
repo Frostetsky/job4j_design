@@ -15,7 +15,7 @@ public class ParkingTest {
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
         parkingPlace.add(kio);
-        assertThat(parkingPlace.getParkingPlace("TrackPlaces"), is(List.of(uaz)));
+        assertThat(parkingPlace.getParkingPlace("TruckPlaces"), is(List.of(uaz)));
         assertThat(parkingPlace.getParkingPlace("CarsPlaces"), is(List.of(toyota, kio)));
     }
 
@@ -45,9 +45,9 @@ public class ParkingTest {
         AbstractVehicle toyota = new Car("Toyota", "Camry");
         AbstractVehicle uaz = new Truck("Uaz", "B26");
         boolean resultCar = parkingPlace.add(toyota);
-        boolean resultTrack = parkingPlace.add(uaz);
+        boolean resultTruck = parkingPlace.add(uaz);
         assertThat(resultCar, is(false));
-        assertThat(resultTrack, is(true));
+        assertThat(resultTruck, is(true));
     }
 
     @Test

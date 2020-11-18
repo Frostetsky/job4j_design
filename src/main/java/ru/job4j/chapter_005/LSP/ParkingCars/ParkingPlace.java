@@ -50,7 +50,7 @@ public class ParkingPlace implements Parking {
 
     @Override
     public List<AbstractVehicle> getParkingPlace(String vehicles) {
-        if (vehicles.equalsIgnoreCase("trackplaces")) {
+        if (vehicles.equalsIgnoreCase("truckplaces")) {
             return trucks;
         } else if (vehicles.equalsIgnoreCase("carsplaces")) {
             return cars;
