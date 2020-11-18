@@ -7,16 +7,16 @@ import java.util.stream.IntStream;
 
 public class ParkingPlace implements Parking {
     private int fullsizecar;
-    private int fullsizetrack;
+    private int fullsizetruck;
     private final int CAR_SIZE = 1;
     private List<AbstractVehicle> cars;
-    private List<AbstractVehicle> tracks;
+    private List<AbstractVehicle> trucks;
 
-    public ParkingPlace(final int size_place_for_car,final int size_place_for_track) {
+    public ParkingPlace(final int size_place_for_car, final int size_place_for_truck) {
         this.fullsizecar = size_place_for_car;
-        this.fullsizetrack = size_place_for_track;
+        this.fullsizetruck = size_place_for_truck;
         cars = new ArrayList<>(size_place_for_car);
-        tracks = new ArrayList<>(size_place_for_track);
+        trucks = new ArrayList<>(size_place_for_truck);
     }
 
     @Override
@@ -27,8 +27,8 @@ public class ParkingPlace implements Parking {
         if (vehicle.getSize() == CAR_SIZE) {
             cars.add(vehicle);
         } else {
-            if (tracks.size() < fullsizetrack) {
-                tracks.add(vehicle);
+            if (trucks.size() < fullsizetruck) {
+                trucks.add(vehicle);
             } else {
                 IntStream.range(0, vehicle.getSize()).forEach(i -> cars.add(vehicle));
             }
@@ -42,7 +42,7 @@ public class ParkingPlace implements Parking {
             return false;
         }
         if (vehicle.getSize() != CAR_SIZE &&
-                (tracks.size() == fullsizetrack && (fullsizecar - cars.size()) < vehicle.getSize())) {
+                (trucks.size() == fullsizetruck && (fullsizecar - cars.size()) < vehicle.getSize())) {
             return false;
         }
         return true;
@@ -51,7 +51,7 @@ public class ParkingPlace implements Parking {
     @Override
     public List<AbstractVehicle> getParkingPlace(String vehicles) {
         if (vehicles.equalsIgnoreCase("trackplaces")) {
-            return tracks;
+            return trucks;
         } else if (vehicles.equalsIgnoreCase("carsplaces")) {
             return cars;
         } else {

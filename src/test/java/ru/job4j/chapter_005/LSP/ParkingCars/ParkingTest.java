@@ -11,7 +11,7 @@ public class ParkingTest {
         ParkingPlace parkingPlace = new ParkingPlace(2, 1);
         AbstractVehicle toyota = new Car("Toyota", "Camry");
         AbstractVehicle kio = new Car("Kio", "Optima");
-        AbstractVehicle uaz = new Track("Uaz", "B26");
+        AbstractVehicle uaz = new Truck("Uaz", "B26");
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
         parkingPlace.add(kio);
@@ -23,7 +23,7 @@ public class ParkingTest {
     public void whenTrackIsParking() {
         ParkingPlace parkingPlace = new ParkingPlace(3, 0);
         AbstractVehicle toyota = new Car("Toyota", "Camry");
-        AbstractVehicle uaz = new Track("Uaz", "B26");
+        AbstractVehicle uaz = new Truck("Uaz", "B26");
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
         assertThat(parkingPlace.getParkingPlace("CarsPlaces"), is(List.of(toyota, uaz, uaz)));
@@ -33,7 +33,7 @@ public class ParkingTest {
     public void whenTrackIsNotParking() {
         ParkingPlace parkingPlace = new ParkingPlace(2, 0);
         AbstractVehicle toyota = new Car("Toyota", "Camry");
-        AbstractVehicle uaz = new Track("Uaz", "B26");
+        AbstractVehicle uaz = new Truck("Uaz", "B26");
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
         assertThat(parkingPlace.getParkingPlace("CarsPlaces"), is(List.of(toyota)));
@@ -43,7 +43,7 @@ public class ParkingTest {
     public void whenCarIsNotParking() {
         ParkingPlace parkingPlace = new ParkingPlace(0, 1);
         AbstractVehicle toyota = new Car("Toyota", "Camry");
-        AbstractVehicle uaz = new Track("Uaz", "B26");
+        AbstractVehicle uaz = new Truck("Uaz", "B26");
         boolean resultCar = parkingPlace.add(toyota);
         boolean resultTrack = parkingPlace.add(uaz);
         assertThat(resultCar, is(false));
@@ -54,8 +54,8 @@ public class ParkingTest {
     public void whenCarParking() {
         ParkingPlace parkingPlace = new ParkingPlace(2, 1);
         AbstractVehicle toyota = new Car("Toyota", "Camry");
-        AbstractVehicle uaz = new Track("Uaz", "B26");
-        AbstractVehicle vaz = new Track("Vaz", "V26");
+        AbstractVehicle uaz = new Truck("Uaz", "B26");
+        AbstractVehicle vaz = new Truck("Vaz", "V26");
         boolean resultCar = parkingPlace.add(toyota);
         boolean resultUaz = parkingPlace.add(uaz);
         boolean resultVaz = parkingPlace.add(vaz);
