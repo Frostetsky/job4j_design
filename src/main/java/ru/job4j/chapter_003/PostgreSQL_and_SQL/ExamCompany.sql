@@ -42,7 +42,7 @@ insert into person(id, name, company_id) values (11, 'Java Developer Kirill', 5)
 -- Company name for each person.
 select person.name, c.name
 from person
-full outer join company c on person.company_id = c.id
+left join company c on person.company_id = c.id
 where company_id != 5;
 
 -- Select the name of the company with the maximum number of persons and number of persons in this company.
