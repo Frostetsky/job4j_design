@@ -2,12 +2,13 @@ package ru.job4j.chapter_005.LSP.ParkingCars;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 
 public class ParkingPlace implements Parking {
     private int fullsizecar;
     private int fullsizetrack;
-    private static final int availableNumberOfSeatsOnTheRight = 2;
+    private final int CAR_SIZE = 1;
     private List<AbstractVehicle> cars;
     private List<AbstractVehicle> tracks;
 
@@ -20,39 +21,31 @@ public class ParkingPlace implements Parking {
 
     @Override
     public boolean add(AbstractVehicle vehicle) {
-        boolean result = false;
-        if (vehicle.getSize() == 1) {
-            if (accept(vehicle)) {
-                cars.add(vehicle);
-                result = true;
-            }
-        } else if (vehicle.getSize() == 2) {
-            if (accept(vehicle)) {
+        if (!accept(vehicle)) {
+            return false;
+        }
+        if (vehicle.getSize() == CAR_SIZE) {
+            cars.add(vehicle);
+        } else {
+            if (tracks.size() < fullsizetrack) {
                 tracks.add(vehicle);
-                result = true;
-            } else if (trackPlacesIsFull()) {
-                for (int i = 0; i < vehicle.getSize(); i++) {
-                    cars.add(vehicle);
-                    result = true;
-                }
+            } else {
+                IntStream.range(0, vehicle.getSize()).forEach(i -> cars.add(vehicle));
             }
         }
-        return result;
+        return true;
     }
 
     @Override
     public boolean accept(AbstractVehicle vehicle) {
-        if (vehicle.getSize() == 1) {
-            return fullsizecar != cars.size();
-        } else if (vehicle.getSize() == 2) {
-            return fullsizetrack != tracks.size();
-        } else {
-            throw new IllegalArgumentException();
+        if (vehicle.getSize() == CAR_SIZE && fullsizecar == cars.size()) {
+            return false;
         }
-    }
-
-    private boolean trackPlacesIsFull() {
-        return fullsizetrack == tracks.size() && ( (fullsizecar - cars.size()) >= availableNumberOfSeatsOnTheRight );
+        if (vehicle.getSize() != CAR_SIZE &&
+                (tracks.size() == fullsizetrack && (fullsizecar - cars.size()) < vehicle.getSize())) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -26,7 +26,6 @@ public class ParkingTest {
         AbstractVehicle uaz = new Track("Uaz", "B26");
         parkingPlace.add(toyota);
         parkingPlace.add(uaz);
-        assertThat(parkingPlace.accept(uaz), is(false));
         assertThat(parkingPlace.getParkingPlace("CarsPlaces"), is(List.of(toyota, uaz, uaz)));
     }
 
@@ -36,8 +35,7 @@ public class ParkingTest {
         AbstractVehicle toyota = new Car("Toyota", "Camry");
         AbstractVehicle uaz = new Track("Uaz", "B26");
         parkingPlace.add(toyota);
-        boolean result = parkingPlace.add(uaz);
-        assertThat(result, is(false));
+        parkingPlace.add(uaz);
         assertThat(parkingPlace.getParkingPlace("CarsPlaces"), is(List.of(toyota)));
     }
 
