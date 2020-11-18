@@ -1,43 +1,43 @@
 package ru.job4j.chapter_002.java_IO.projectarchive;
 
+import ru.job4j.chapter_002.java_IO.search.SearchFiles;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zip {
-
-    public void zipRead(String source_dir, String zip_file, String ending) throws Exception {
-        FileOutputStream fout = new FileOutputStream(zip_file);
-        ZipOutputStream zout = new ZipOutputStream(fout);
-        File fileSource = new File(source_dir);
-        addDirectory(zout, fileSource, ending);
-        zout.close();
-        System.out.println("Zip файл создан!");
+    public void packFiles(List<File> sources, File target) {
+        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+            for (File source : sources) {
+                zip.putNextEntry(new ZipEntry(source.getPath()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
+                    zip.write(out.readAllBytes());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void addDirectory(ZipOutputStream zout, File fileSource, String ending) throws Exception {
-        File[] files = fileSource.listFiles();
-        System.out.println("Добавление директории <" + fileSource.getName() + ">");
-        assert files != null;
-        for (File file : files) {
-            if (file.isDirectory()) {
-                addDirectory(zout, file, ending);
-                continue;
+    public void packSingleFile(File source, File target) {
+        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
+            zip.putNextEntry(new ZipEntry(source.getPath()));
+            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
+                zip.write(out.readAllBytes());
             }
-            if (file.getName().endsWith(ending)) {
-                continue;
-            }
-            System.out.println("Добавление файла <" + file.getName() + ">");
-            FileInputStream fis = new FileInputStream(file);
-            zout.putNextEntry(new ZipEntry(file.getPath()));
-            byte[] buffer = new byte[4048];
-            int length;
-            while ((length = fis.read(buffer)) > 0) {
-                zout.write(buffer, 0, length);
-            }
-            zout.closeEntry();
-            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    public static List<Path> findFiles(ArgZip argZip) throws IOException {
+        SearchFiles searcher = new SearchFiles(p -> !p.toFile().getName().endsWith(argZip.exclude()));
+        Files.walkFileTree(Path.of(argZip.directory()), searcher);
+        return searcher.getPaths();
     }
 }
 
